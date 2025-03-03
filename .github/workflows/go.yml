@@ -38,7 +38,7 @@ jobs:
   
   build:
     needs: test
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         os: ['ubuntu-latest', 'ubuntu-18.04']
