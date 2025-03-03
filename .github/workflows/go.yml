@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         go_version: ['1.18', '1.17', '>=1.18']
-        os: ['ubuntu-latest', 'ubuntu-20.04']
+        os: ['ubuntu-latest', 'ubuntu-20.04', 'ubuntu-22.04']
     steps:
     - uses: actions/checkout@v3
 
@@ -38,16 +38,21 @@ jobs:
     - name: Create-DB
       run: docker-compose up -d
 
+    - name: Wait for DB to be ready
+      run: |
+        until docker exec <seu-container-db> pg_isready -h localhost -U root; do
+          sleep 2
+        done
+
     - name: Test
       run: go test -v main_test.go 
       
-  
   build:
     needs: test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'ubuntu-20.04']
+        os: ['ubuntu-latest', 'ubuntu-20.04', 'ubuntu-22.04']
     steps:
     - uses: actions/checkout@v3
     - name: Build
