@@ -1,4 +1,4 @@
-name: Entrega contínua
+name: Entrega continua
 
 on:
     workflow_call:
@@ -11,7 +11,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: programa
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Deploy to Staging server
               uses: easingthemes/ssh-deploy@main
